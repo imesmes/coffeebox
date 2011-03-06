@@ -4,6 +4,8 @@
 {
     // View containing projects list
     TaskListView     taskListView @accessors; // @accessors define setters and getters
+    // Intervals Controller
+    IntervalsController intervalsController @accessors;
     // URL for requesting projects to Rails app
     CPString         baseURL;
     // Connection for listing tasks
@@ -17,13 +19,14 @@
       baseURL = "http://localhost:3000"
     }
     return self;
-}
+} 
 
 // Callback when changing collection item
 - (void)collectionViewDidChangeSelection:(CPCollectionView)collectionView
 {
     // Get current object
     var currentObject = [collectionView getCurrentObject] ;
+    [intervalsController loadIntervals:currentObject.id] ;
 }
 
 // Fake data for test

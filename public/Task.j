@@ -2,8 +2,9 @@
 
 @implementation Task : CPObject
 {
-    CPString  name  @accessors;
-    int       id    @accessors;
+    int       id            @accessors;
+    CPString  name          @accessors;
+    int       project_id    @accessors;
 }
 
 - (id)init
@@ -13,6 +14,7 @@
     {
         id = 0;
         name = @"" ;
+        project_id = 0;
     }
     return self ;
 }
@@ -24,8 +26,9 @@
     self = [self init] ;
     if (self)
     {
-        id        = aJSONObject.id; 
-        name      = aJSONObject.name;
+        id          = aJSONObject.id; 
+        name        = aJSONObject.name;
+        project_id  = aJSONObject.project_id;
     }
     return self ;
 }
@@ -43,36 +46,3 @@
     
     return tasks ;
 }
-
-+ (CPArray)getExampleTasks
-{
-    var array   = [[CPArray alloc] init] ;
-    var task    = [[Project alloc] init] ;
-    
-    [task setName:@"This is the first task"] ;
-    [array addObject:task] ;
-     
-    task    = [[Project alloc] init] ;
-    [task setName:@"This is the second task"] ;
-    [array addObject:task] ;
-    
-    task    = [[Project alloc] init] ;
-    [task setName:@"This is the third task"] ;
-    [array addObject:task] ;
-
-    task    = [[Project alloc] init] ;
-    [task setName:@"This is the fourth task"] ;
-    [array addObject:task] ;
-            
-    task    = [[Project alloc] init] ;
-    [task setName:@"This is the fiveth task"] ;
-    [array addObject:task] ;
-
-    task    = [[Project alloc] init] ;
-    [task setName:@"This is the sixth task"] ;
-    [array addObject:task] ;
-
-    return array ;
-}
-
-@end

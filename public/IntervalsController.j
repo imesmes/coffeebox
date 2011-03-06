@@ -1,15 +1,16 @@
 @import <Foundation/CPObject.j>
 
-@implementation ProjectsController : CPObject
+@implementation IntervalsController : CPObject
 {
-    // View containing projects list
-    ProjectListView     projectListView @accessors; // @accessors define setters and getters
-    // Tasks Controller
-    TasksController     tasksController @accessors;
-    // URL for requesting projects to Rails app
+    //// View containing intervals list
+    IntervalListView     intervalListView @accessors; // @accessors define setters and getters
+    //// URL for requesting projects to Rails app
     CPString            baseURL;
-    // Connection for listing projects
+    // Connection for listing intervals
     CPURLConnection  listConnection;
+    // Connection for start interval
+    CPURLConnection  startConnection;
+    CPURLConnection  stopConnection;
 }
 
 - (id)init
@@ -26,21 +27,37 @@
 {
     // Get current object
     var currentObject = [collectionView getCurrentObject] ;
-    [tasksController loadTasks:currentObject.id] ;
 }
 
-// Fake data for test
-- (void)loadExampleProjects
+- (void)start:(id)sender
 {
-    var projects = [Project getExampleProjects] ;
-    [projectListView setContent:projects] ;
+    var project_id = 1;
+    var task_id = 1;
+
+    var request     = [CPURLRequest requestWithURL:baseURL + "/projects/"+project_id+"/tasks/"+task_id+"/intervals/start"];
+    [request setHTTPMethod: "POST"];
+    //[request setHTTPBody: JSONString];
+    startConnection  = [CPURLConnection connectionWithRequest:request delegate:self];
+}
+
+- (void)stop:(id)sender
+{
+    var project_id = 1;
+    var task_id = 1;
+
+    var request     = [CPURLRequest requestWithURL:baseURL + "/projects/"+project_id+"/tasks/"+task_id+"/intervals/stop"];
+    [request setHTTPMethod: "POST"];
+    stopConnection  = [CPURLConnection connectionWithRequest:request delegate:self];
 }
 
 // Load real data from Rails app
-- (void)loadProjects
+- (void)loadIntervals
 {
+    var project_id = 1;
+    var task_id = 1;
+
     // Create request for projects
-    var request = [CPURLRequest requestWithURL:baseURL+"/projects.json"];
+    var request = [CPURLRequest requestWithURL:baseURL+"/projects/"+project_id+"/tasks/"+task_id+"/intervals.json"];
     [request setHTTPMethod:"GET"];
     // Create connection for handling request and delegating response to
     // this controller
@@ -56,23 +73,11 @@
         // Use data result for creating JSON objects
         var results = CPJSObjectCreateWithJSON(data);
         // Create array of projects
-        var projects = [Project initFromJSONObjects:results] ;
+        var intervals = [Interval initFromJSONObjects:results] ;
         // Set content pro project list view with array of projects
-        [projectListView setContent:projects] ;
-        [projectListView setSelectionIndexes:[[CPIndexSet alloc] initWithIndex:0] ] ;
+        [intervalListView setContent:intervals] ;
+        [intervalListView setSelectionIndexes:[[CPIndexSet alloc] initWithIndex:0] ] ;
     }
-    //else if (connection===addConnection)
-    //{
-    //    [self loadPosts] ;
-    //}
-    //else if (connection===updateConnection)
-    //{
-    //    [self loadPosts] ;
-    //}
-    //else if (connection===deleteConnection)
-    //{
-    //    [self loadPosts] ;
-    //}
 }
 
 // Callback when error

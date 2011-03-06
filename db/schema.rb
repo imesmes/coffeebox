@@ -10,6 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20110306105926) do
+
+  create_table "intervals", :force => true do |t|
+    t.datetime "start"
+    t.datetime "stop"
+    t.string   "details"
+    t.boolean  "billable"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
