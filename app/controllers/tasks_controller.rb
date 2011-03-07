@@ -1,8 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :authenticate
-
   def index
-    @tasks = teambox_api_call("/api/1/projects/#{params[:project_id]}/tasks")
+    @tasks = Task.where(:project_id => params[:project_id]).all
 
     respond_to do |format|
       format.json { render :json => @tasks }

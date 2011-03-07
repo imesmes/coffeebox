@@ -26,7 +26,7 @@
 {
     // Get current object
     var currentObject = [collectionView getCurrentObject] ;
-    [tasksController loadTasks:currentObject.id] ;
+    [tasksController loadTasks:currentObject] ;
 }
 
 // Fake data for test

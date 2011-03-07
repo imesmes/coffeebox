@@ -40,7 +40,7 @@
     
     // Create array of tasks using array of json objects
     for (var i=0; i < someJSONObjects.length; i++) {
-        var task    = [[Task alloc] initFromJSONObject:someJSONObjects[i]] ;
+        var task    = [[Task alloc] initFromJSONObject:someJSONObjects[i].task] ;
         [tasks addObject:task] ;
     };
     

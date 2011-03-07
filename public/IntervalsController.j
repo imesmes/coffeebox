@@ -11,6 +11,8 @@
     // Connection for start interval
     CPURLConnection  startConnection;
     CPURLConnection  stopConnection;
+    // SelectedTask
+    Task  selectedTask;
 }
 
 - (id)init
@@ -31,33 +33,37 @@
 
 - (void)start:(id)sender
 {
-    var project_id = 1;
-    var task_id = 1;
-
-    var request     = [CPURLRequest requestWithURL:baseURL + "/projects/"+project_id+"/tasks/"+task_id+"/intervals/start"];
-    [request setHTTPMethod: "POST"];
-    //[request setHTTPBody: JSONString];
-    startConnection  = [CPURLConnection connectionWithRequest:request delegate:self];
+    if(selectedTask) {
+      var request     = [CPURLRequest requestWithURL:baseURL + "/projects/"+selectedTask.project_id+"/tasks/"+selectedTask.id+"/intervals/start"];
+      [request setHTTPMethod: "POST"];
+      startConnection  = [CPURLConnection connectionWithRequest:request delegate:self];
+    }
 }
 
 - (void)stop:(id)sender
 {
-    var project_id = 1;
-    var task_id = 1;
-
-    var request     = [CPURLRequest requestWithURL:baseURL + "/projects/"+project_id+"/tasks/"+task_id+"/intervals/stop"];
-    [request setHTTPMethod: "POST"];
-    stopConnection  = [CPURLConnection connectionWithRequest:request delegate:self];
+    if(selectedTask) {
+      var details     = prompt("Enter details of time log:");
+      if (details!=="")
+      {
+        var JSONString = '{"interval":{"details":"'+details+'"}}'
+        var request     = [CPURLRequest requestWithURL:baseURL + "/projects/"+selectedTask.project_id+"/tasks/"+selectedTask.id+"/intervals/stop"];
+        [request setHTTPBody: JSONString];
+        [request setValue:"application/json" forHTTPHeaderField:"Accept"] ;
+        [request setValue:"application/json" forHTTPHeaderField:"Content-Type"] ;
+        [request setHTTPMethod: "POST"];
+        stopConnection  = [CPURLConnection connectionWithRequest:request delegate:self];
+      }
+    }
 }
 
 // Load real data from Rails app
-- (void)loadIntervals
+- (void)loadIntervals:(Task)task
 {
-    var project_id = 1;
-    var task_id = 1;
-
+    // Set selected task for start/stop queries
+    selectedTask = task;
     // Create request for projects
-    var request = [CPURLRequest requestWithURL:baseURL+"/projects/"+project_id+"/tasks/"+task_id+"/intervals.json"];
+    var request = [CPURLRequest requestWithURL:baseURL+"/projects/"+task.project_id+"/tasks/"+task.id+"/intervals.json"];
     [request setHTTPMethod:"GET"];
     // Create connection for handling request and delegating response to
     // this controller
@@ -77,6 +83,9 @@
         // Set content pro project list view with array of projects
         [intervalListView setContent:intervals] ;
         [intervalListView setSelectionIndexes:[[CPIndexSet alloc] initWithIndex:0] ] ;
+    }
+    else if(connection === startConnection || connection === stopConnection) {
+        [self loadIntervals:selectedTask];
     }
 }
 

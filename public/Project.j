@@ -37,42 +37,11 @@
     
     // Create array of projects using array of json objects
     for (var i=0; i < someJSONObjects.length; i++) {
-        var project    = [[Project alloc] initFromJSONObject:someJSONObjects[i]] ;
+        var project    = [[Project alloc] initFromJSONObject:someJSONObjects[i].project] ;
         [projects addObject:project] ;
     };
     
     return projects ;
-}
-
-+ (CPArray)getExampleProjects
-{
-    var array   = [[CPArray alloc] init] ;
-    var project    = [[Project alloc] init] ;
-    
-    [project setName:@"This is the first project"] ;
-    [array addObject:project] ;
-     
-    project    = [[Project alloc] init] ;
-    [project setName:@"This is the second project"] ;
-    [array addObject:project] ;
-    
-    project    = [[Project alloc] init] ;
-    [project setName:@"This is the third project"] ;
-    [array addObject:project] ;
-
-    project    = [[Project alloc] init] ;
-    [project setName:@"This is the fourth project"] ;
-    [array addObject:project] ;
-            
-    project    = [[Project alloc] init] ;
-    [project setName:@"This is the fiveth project"] ;
-    [array addObject:project] ;
-
-    project    = [[Project alloc] init] ;
-    [project setName:@"This is the sixth project"] ;
-    [array addObject:project] ;
-
-    return array ;
 }
 
 @end

@@ -26,23 +26,18 @@
 {
     // Get current object
     var currentObject = [collectionView getCurrentObject] ;
-    [intervalsController loadIntervals:currentObject.id] ;
-}
-
-// Fake data for test
-- (void)loadExampleTasks
-{
-    var tasks = [Task getExampleTasks] ;
-    [taskListView setContent:tasks] ;
+    if(currentObject) {
+      [intervalsController loadIntervals:currentObject] ;
+    }
 }
 
 // Load real data from Rails app
-- (void)loadTasks:(int)projectId
+- (void)loadTasks:(Project)project
 {
     // Empty TaskListView
     [taskListView setContent:[]] ;
     // Create request for tasks
-    var request = [CPURLRequest requestWithURL:baseURL+"/projects/"+projectId+"/tasks.json"];
+    var request = [CPURLRequest requestWithURL:baseURL+"/projects/"+project.id+"/tasks.json"];
     [request setHTTPMethod:"GET"];
     // Create connection for handling request and delegating response to
     // this controller

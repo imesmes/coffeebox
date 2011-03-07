@@ -41,7 +41,7 @@
     [projectsController setTasksController:tasksController];
     // Intervals Controller
     var intervalsController = [[IntervalsController alloc] init];
-    //[tasksController setIntervalsController:intervalsController];
+    [tasksController setIntervalsController:intervalsController];
 
     var toolbar = [[CPToolbar alloc] initWithIdentifier:"Time-tracking"] ;
     var toolbarDelegate = [[ToolbarDelegate alloc] init] ;
@@ -60,7 +60,7 @@
     [contentView addSubview:rootSplitView] ;
 
     // Split view for projects and tasks
-    var splitView = [[CPSplitView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([contentView bounds]), 200.0)];
+    var splitView = [[CPSplitView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([contentView bounds]), 400.0)];
     // Vertical
     [splitView setVertical:YES] ;
     [splitView setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable ]; 
@@ -84,15 +84,15 @@
     [splitView addSubview:taskListScrollView] ;
 
     // ScrollView for time log 
-    var timeLogListScrollView = [[CPScrollView alloc] initWithFrame:CGRectMake(0.0, 200.0, 
-                                CGRectGetWidth([contentView bounds]), CGRectGetHeight([contentView bounds])-200.0)] ;
+    var timeLogListScrollView = [[CPScrollView alloc] initWithFrame:CGRectMake(0.0, 400.0, 
+                                CGRectGetWidth([contentView bounds]), CGRectGetHeight([contentView bounds])-400.0)] ;
     [timeLogListScrollView setHasHorizontalScroller:NO] ;
     [timeLogListScrollView setAutohidesScrollers:YES] ;
     // Add scrollview to splitView
     [rootSplitView addSubview:timeLogListScrollView] ;
 
     // View for projects collection
-    var projectListView = [[ProjectListView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([contentView bounds]), 200.0)] ;
+    var projectListView = [[ProjectListView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([contentView bounds]), 400.0)] ;
     // Delegate functions to postsController
     [projectListView setDelegate:projectsController] ;
     // Using setter for projectListView
@@ -104,7 +104,7 @@
     [projectListScrollView setDocumentView:projectListView] ;
 
     // View for tasks collection
-    var taskListView = [[TaskListView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([contentView bounds]), 200.0)] ;
+    var taskListView = [[TaskListView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([contentView bounds]), 400.0)] ;
     // Delegate functions to tasksController
     [taskListView setDelegate:tasksController] ;
     // Using setter for taskListView
@@ -119,7 +119,6 @@
     [intervalListView setDelegate:intervalsController] ;
     // Using setter for taskListView
     [intervalsController setIntervalListView:intervalListView] ;
-    [intervalsController loadIntervals] ;
     // Set data for scroll view
     [timeLogListScrollView setDocumentView:intervalListView] ;
 

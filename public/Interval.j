@@ -5,6 +5,8 @@
     int       id            @accessors;
     CPString  start         @accessors;
     CPString  stop          @accessors;
+    CPString  count         @accessors;
+    CPString  details       @accessors;
     int       task_id       @accessors;
 }
 
@@ -16,6 +18,8 @@
         id = 0;
         start = @"" ;
         stop  = @"" ;
+        count = @"" ;
+        details = @"";
         task_id = 0;
     }
     return self ;
@@ -29,8 +33,10 @@
     if (self)
     {
         id       = aJSONObject.id; 
-        start    = aJSONObject.start;
-        stop     = aJSONObject.stop;
+        start    = aJSONObject.human_start;
+        stop     = aJSONObject.human_stop;
+        count    = aJSONObject.count;
+        details  = aJSONObject.details;
         task_id  = aJSONObject.task_id;
     }
     return self ;

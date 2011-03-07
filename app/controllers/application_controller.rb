@@ -10,15 +10,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def teambox_api_call(url)
-    http = Net::HTTP.new("teambox.com", 443)
-    http.use_ssl = true
-    http.start do |http|
-      req = Net::HTTP::Get.new(url, {})
-      req.basic_auth(@username, @password)
-      response = http.request(req)
-      resp = JSON.parse(response.body)
-      return resp["objects"]
-    end
+  def teambox_api_call(method,*args)
+    httpauth = Teambox::HTTPAuth.new(@username, @password)
+    client = Teambox::Base.new(httpauth)
+    return client.send(method,*args)
   end
 end

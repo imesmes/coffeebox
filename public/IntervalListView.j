@@ -17,7 +17,7 @@
     
         itemPrototype = [[CPCollectionViewItem alloc] init];
         // Set view for item prototype
-        [itemPrototype setView:[[TaskItemView alloc] initWithFrame:CGRectMakeZero()]];
+        [itemPrototype setView:[[IntervalItemView alloc] initWithFrame:CGRectMakeZero()]];
         // Set item prototype for collection view
         [self setItemPrototype:itemPrototype];
     }
