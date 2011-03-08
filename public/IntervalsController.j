@@ -19,7 +19,7 @@
 {
     self = [super init];
     if(self) {
-      baseURL = "http://localhost:3000"
+      baseURL = "http://coffeebox.imesmes.com"
     }
     return self;
 }
