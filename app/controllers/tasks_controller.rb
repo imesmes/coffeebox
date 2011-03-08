@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_filter :authenticate
+
   def index
     @tasks = Task.where(:project_id => params[:project_id]).all
 

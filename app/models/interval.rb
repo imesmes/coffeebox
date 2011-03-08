@@ -15,7 +15,17 @@ class Interval < ActiveRecord::Base
   end
 
   def count
-    return nil if self.stop.nil?
+    return 0 if self.stop.nil?
+    seconds = self.stop-self.start
+    if seconds < 60
+      return 0
+    else
+      return seconds/3600
+    end
+  end
+
+  def human_count
+    return "" if self.stop.nil?
     distance_of_time_in_words(self.start,self.stop)
   end
 

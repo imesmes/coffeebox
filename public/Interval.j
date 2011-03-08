@@ -35,7 +35,7 @@
         id       = aJSONObject.id; 
         start    = aJSONObject.human_start;
         stop     = aJSONObject.human_stop;
-        count    = aJSONObject.count;
+        count    = aJSONObject.human_count;
         details  = aJSONObject.details;
         task_id  = aJSONObject.task_id;
     }
